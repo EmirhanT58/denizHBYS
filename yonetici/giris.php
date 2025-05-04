@@ -23,9 +23,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["yonetici_id"] = $user["id"];
             $_SESSION["k_ad"] = $user["k_ad"];
             $_SESSION["ad_soyad"] = $user["ad_soyad"];
+            echo '<script>Swal.fire("Başarılı", "Giriş Başarılı Yönlendiriyorsunuz", "success"); </script>';
             header("Location: dashboard.php");
             exit;
         } else {
+            
+            echo '<script>Swal.fire("Başarısız", "Bilgiler Yanlış", "erorr"); </script>';
             $error = "Geçersiz kullanıcı adı veya şifre!";
         }
     }
@@ -40,6 +43,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>denizHBYS - Yönetici Girişi</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script type="text/javascript" src="sweetalert2.all.min.js"></script>
+
     <style>
         body {
             background: linear-gradient(135deg, #1e40af, #3b82f6);
@@ -62,6 +69,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php echo $error; ?>
         </div>
         <?php endif; ?>
+        
         
         <form method="POST">
             <div class="mb-4">

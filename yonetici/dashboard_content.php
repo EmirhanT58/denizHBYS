@@ -33,7 +33,24 @@ LIMIT 3
 ");
 $son_randevular = $hasta->fetchAll(PDO::FETCH_ASSOC);
 
+$veri = $db->query("
+    SELECT MONTH(tarih) AS ay, COUNT(*) AS adet
+    FROM randevular
+    WHERE YEAR(tarih) = YEAR(CURDATE())
+    GROUP BY ay
+    ORDER BY ay
+");
+
+$veriler = array_fill(1, 12, 0); // 12 ay için boş diziler
+
+while ($row = $veri->fetch(PDO::FETCH_ASSOC)) {
+    $veriler[(int)$row['ay']] = (int)$row['adet'];
+}
+
+
 ?>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <div class="mb-6">
     <h2 class="text-2xl font-bold text-gray-800">Hoş Geldiniz, <?php echo htmlspecialchars($k_ad); ?></h2>
     <p class="text-gray-600"><?php echo "Son giriş: IP: " . $ip . " " ."Son İşlem Tarihi:" . $girisTarihi;
@@ -53,10 +70,6 @@ $son_randevular = $hasta->fetchAll(PDO::FETCH_ASSOC);
                 <p class="text-2xl font-bold text-gray-800"><?= $aktifHastaSayisi ?></p>
             </div>
         </div>
-        <div class="mt-4">
-            <span class="text-green-500 text-sm font-medium"><i class="fas fa-arrow-up mr-1"></i> 5.2%</span>
-            <span class="text-gray-500 text-sm ml-2">Geçen aya göre</span>
-        </div>
     </div>
 
     <div class="bg-white rounded-xl shadow-md p-6 stat-card transition duration-300">
@@ -70,8 +83,6 @@ $son_randevular = $hasta->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
         <div class="mt-4">
-            <span class="text-green-500 text-sm font-medium"><i class="fas fa-arrow-up mr-1"></i> 2.1%</span>
-            <span class="text-gray-500 text-sm ml-2">Geçen aya göre</span>
         </div>
     </div>
 
@@ -85,10 +96,6 @@ $son_randevular = $hasta->fetchAll(PDO::FETCH_ASSOC);
                 <p class="text-2xl font-bold text-gray-800"><?= $aktifRandevuSayisi ?></p>
             </div>
         </div>
-        <div class="mt-4">
-            <span class="text-red-500 text-sm font-medium"><i class="fas fa-arrow-down mr-1"></i> 1.4%</span>
-            <span class="text-gray-500 text-sm ml-2">Düne göre</span>
-        </div>
     </div>
 
     <div class="bg-white rounded-xl shadow-md p-6 stat-card transition duration-300">
@@ -101,33 +108,10 @@ $son_randevular = $hasta->fetchAll(PDO::FETCH_ASSOC);
                 <p class="text-2xl font-bold text-gray-800">₺245,390</p>
             </div>
         </div>
-        <div class="mt-4">
-            <span class="text-green-500 text-sm font-medium"><i class="fas fa-arrow-up mr-1"></i> 8.7%</span>
-            <span class="text-gray-500 text-sm ml-2">Geçen aya göre</span>
-        </div>
     </div>
 </div>
 
-<!-- Grafikler ve Tablolar -->
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-    <div class="bg-white rounded-xl shadow-md p-6">
-        <div class="flex items-center justify-between mb-4">
-            <h3 class="text-lg font-semibold text-gray-800">Randevu Dağılımı</h3>
-            <select class="text-sm border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <option>Bu Hafta</option>
-                <option>Bu Ay</option>
-                <option selected>Bu Yıl</option>
-            </select>
-        </div>
-        <div class="h-64">
-            <!-- Grafik alanı (Chart.js veya benzeri ile doldurulabilir) -->
-            <div class="flex items-center justify-center h-full bg-gray-100 rounded-lg">
-                <p class="text-gray-500">Randevu dağılım grafiği burada gösterilecek</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="bg-white rounded-xl shadow-md p-6">
+<div class="bg-white rounded-xl shadow-md p-6">
     <div class="flex items-center justify-between mb-4">
         <h3 class="text-lg font-semibold text-gray-800">Son Randevular</h3>
         <a href="dashboard.php?sayfa=randevular" class="text-sm text-blue-600 hover:underline">Tümünü Gör</a>
@@ -136,10 +120,14 @@ $son_randevular = $hasta->fetchAll(PDO::FETCH_ASSOC);
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
-                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hasta</th>
-                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Doktor</th>
-                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tarih</th>
-                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Durum</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hasta
+                    </th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Doktor
+                    </th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tarih
+                    </th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Durum
+                    </th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -149,7 +137,7 @@ $son_randevular = $hasta->fetchAll(PDO::FETCH_ASSOC);
                         <?= $randevu['ad'] . ' ' . $randevu['soyad'] ?>
                     </td>
                     <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
-                    <?= $randevu["unvan"]." ".$randevu['doktor_ad'] ?>
+                        <?= $randevu["unvan"]." ".$randevu['doktor_ad'] ?>
                     </td>
                     <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
                         <?= date("d/m/Y H:i", strtotime($randevu['tarih'])) ?>

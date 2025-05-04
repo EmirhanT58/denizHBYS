@@ -7,7 +7,7 @@ session_start();
 include '../database/db.php'; // veritabanı bağlantı dosyan
 
 // Hasta ID'si GET ile alınıyor
-$id = $_GET['hasta_id'] ?? null;
+$id = $_GET['id'] ?? null;
 
 if (!$id) {
     die("Hasta ID belirtilmedi.");

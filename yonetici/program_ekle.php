@@ -41,7 +41,7 @@ $insert = $query->execute([
 ]);
 
 if ($insert) {
-    header("Location: doktorcalisma.php?durum=ok");
+    header("Location: dashboard.php?sayfa=doktorcalismaprogrami&baslangic=$baslangic_saati&bitis=$bitis_saati&doktor_id=$doktor_id&poliklinik_id=$poliklinik_id");
     exit;
 } else {
     echo "Kayıt sırasında bir hata oluştu.";

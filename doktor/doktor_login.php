@@ -16,6 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION["doktor_id"] = $doktor["id"];
         $_SESSION["doktor_ad"] = $doktor["ad_soyad"];
         $_SESSION["doktor_pol_id"] = $doktor["pol_id"];
+        $_SESSION["doktor_tc"] = $doktor["tc"];
         header("Location: doktor_dashboard.php");
         exit;
     } else {

@@ -57,7 +57,8 @@ $hastalar = $db->query("SELECT * FROM hastalar ORDER BY ad ASC")->fetchAll(PDO::
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                <?= htmlspecialchars($hasta['tc']) ?>
+                                <?= htmlspecialchars($hasta['tc']); // Eğer sütun adı gerçekten "id" ise
+?>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                                 <?= date("d/m/Y", strtotime($hasta['dogum_tarihi'])) ?>
@@ -72,12 +73,6 @@ $hastalar = $db->query("SELECT * FROM hastalar ORDER BY ad ASC")->fetchAll(PDO::
                                     <a href="hasta_detay.php?id=<?= $hasta['id'] ?>" class="text-gray-500 hover:text-primary-600 p-1.5 rounded-md hover:bg-gray-100 transition-colors" title="Detay">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    <a href="hasta_duzenle.php?id=<?= $hasta['id'] ?>" class="text-gray-500 hover:text-blue-600 p-1.5 rounded-md hover:bg-gray-100 transition-colors" title="Düzenle">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <a href="hasta_sil.php?id=<?= $hasta['id'] ?>" onclick="return confirm('Bu hastayı silmek istediğinize emin misiniz?')" class="text-gray-500 hover:text-red-600 p-1.5 rounded-md hover:bg-gray-100 transition-colors" title="Sil">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
                                 </div>
                             </td>
                         </tr>
@@ -89,7 +84,7 @@ $hastalar = $db->query("SELECT * FROM hastalar ORDER BY ad ASC")->fetchAll(PDO::
                                 <div class="flex flex-col items-center justify-center text-gray-400">
                                     <i class="fas fa-user-injured text-4xl mb-3"></i>
                                     <p class="text-sm">Kayıtlı hasta bulunamadı</p>
-                                    <a href="hasta_ekle.php" class="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors">
+                                    <a href="#" class="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors">
                                         <i class="fas fa-plus mr-2"></i> Eğer Sıkıntı olduğun Düşünüyorsanız Sistem Yönetinicinize Başvurun
                                     </a>
                                 </div>

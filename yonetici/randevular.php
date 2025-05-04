@@ -10,7 +10,7 @@ $result = $db->prepare("SELECT r.id, h.ad, h.soyad, r.durum ,d.unvan ,r.tur ,d.a
 $result->execute();
 $randevular = $result->fetchAll(PDO::FETCH_ASSOC);
 
-$doktor_sorgu = $db->prepare("SELECT id, unvan, ad_soyad, uzmanlik FROM doktorlar");
+$doktor_sorgu = $db->prepare("SELECT id, unvan, ad_soyad, pol_id FROM doktorlar");
 $doktor_sorgu->execute();
 $doktorlar = $doktor_sorgu->fetchAll(PDO::FETCH_ASSOC);
 
@@ -26,13 +26,20 @@ $doktorlar = $doktor_sorgu->fetchAll(PDO::FETCH_ASSOC);
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hasta</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Doktor</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Poliklinik</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tarih</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Randevu Türü</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Durum</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">İşlem</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hasta
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Doktor
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Poliklinik</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tarih
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Randevu
+                        Türü</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Durum
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">İşlem
+                    </th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -41,10 +48,13 @@ $doktorlar = $doktor_sorgu->fetchAll(PDO::FETCH_ASSOC);
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center">
                             <div class="flex-shrink-0 h-10 w-10">
-                                <img class="h-10 w-10 rounded-full" src="https://ui-avatars.com/api/?name=<?php echo urlencode($randevu['ad']." ".$randevu['soyad']); ?>&background=3b82f6&color=fff" alt="">
+                                <img class="h-10 w-10 rounded-full"
+                                    src="https://ui-avatars.com/api/?name=<?php echo urlencode($randevu['ad']." ".$randevu['soyad']); ?>&background=3b82f6&color=fff"
+                                    alt="">
                             </div>
                             <div class="ml-4">
-                                <div class="text-sm font-medium text-gray-900"><?php echo htmlspecialchars($randevu['ad']. " " .$randevu['soyad'])  ?></div>
+                                <div class="text-sm font-medium text-gray-900">
+                                    <?php echo htmlspecialchars($randevu['ad']. " " .$randevu['soyad'])  ?></div>
                             </div>
                         </div>
                     </td>
@@ -61,13 +71,28 @@ $doktorlar = $doktor_sorgu->fetchAll(PDO::FETCH_ASSOC);
                         <div><?php echo $randevu["tur"]; ?></div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <a href="dashboard.php?sayfa=doktorlar&durum=<?php echo $doktor['id']; ?>" class="px-2 py-1 text-xs font-semibold rounded-full <?php echo $randevu['durum'] ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
+                        <a href="#" class="px-2 py-1 text-xs font-semibold rounded-full 
+    <?php 
+    if ($randevu['durum'] == 'Onaylandı') {
+        echo 'bg-green-100 text-green-800';
+    } elseif ($randevu['durum'] == 'Beklemede') {
+        echo 'bg-yellow-100 text-yellow-800';
+    } elseif ($randevu['durum'] == 'İptal Edildi') {
+        echo 'bg-red-100 text-red-800';
+    } else {
+        // Default style for unknown statuses
+        echo 'bg-gray-100 text-gray-800';
+    }
+    ?>">
                             <?php echo $randevu['durum'] ?>
                         </a>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <a href="#" class="text-blue-600 hover:text-blue-900 mr-3"><i class="fas fa-edit"></i></a>
-                        <a href="dashboard.php?sayfa=doktorlar&sil=<?php echo $doktor['id']; ?>" class="text-red-600 hover:text-red-900" onclick="return confirm('Bu doktoru silmek istediğinize emin misiniz?')"><i class="fas fa-trash"></i></a>
+
+                        <a href="dashboard.php?sayfa=doktorlar&sil=<?php echo $doktor['id']; ?>"
+                            class="text-red-600 hover:text-red-900"
+                            onclick="return confirm('Bu Randevuyu silmek istediğinize emin misiniz?')"><i
+                                class="fas fa-trash"></i></a>
                     </td>
                 </tr>
                 <?php endforeach; ?>
@@ -104,7 +129,8 @@ $doktorlar = $doktor_sorgu->fetchAll(PDO::FETCH_ASSOC);
                             class="mt-1 w-full rounded-md border-gray-300 shadow-sm p-2 focus:ring focus:ring-blue-200">
                             <option value="">Doktor Seçiniz</option>
                             <?php foreach ($doktorlar as $doktor): ?>
-                            <option value="<?= htmlspecialchars($doktor['unvan'] . ' ' . $doktor['ad_soyad'] . ' - ' . $doktor['uzmanlik']) ?>">
+                            <option
+                                value="<?= htmlspecialchars($doktor['unvan'] . ' ' . $doktor['ad_soyad'] . ' - ' . $doktor['uzmanlik']) ?>">
                                 <?= htmlspecialchars($doktor['unvan'] . ' ' . $doktor['ad_soyad']) ?>
                             </option>
                             <?php endforeach; ?>

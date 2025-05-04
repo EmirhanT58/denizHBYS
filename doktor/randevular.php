@@ -276,7 +276,7 @@ $bugun = date('Y-m-d');
                                                     <?= htmlspecialchars($randevu['hasta_ad'] . ' ' . $randevu['hasta_soyad']) ?>
                                                 </div>
                                                 <div class="text-sm text-gray-500">
-                                                    <?= htmlspecialchars($randevu['tc']) ?>
+                                                   TCKN: <?= htmlspecialchars($randevu['tc']) ?>
                                                 </div>
                                             </div>
                                         </div>

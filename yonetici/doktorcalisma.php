@@ -61,7 +61,7 @@ $poliklinikler = $db->query("SELECT id, ad FROM poliklinikler ORDER BY ad")->fet
         <div class="bg-white rounded-lg shadow-lg p-6 hover-effect">
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-bold text-gray-800">Doktor Çalışma Programları</h1>
-                <button onclick=" openDoktorProgramModal('ekleModal')"
+                <button onclick="openDoktorProgramModal('ekleModal')"
                     class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded flex items-center">
                     <i class="fas fa-plus mr-2"></i> Yeni Program Ekle
                 </button>
@@ -104,19 +104,6 @@ $poliklinikler = $db->query("SELECT id, ad FROM poliklinikler ORDER BY ad")->fet
                                 '<span class="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs">Pasif</span>' ?>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <button onclick="editProgram(
-                                '<?= $program['id'] ?>',
-                                '<?= $program['doktor_id'] ?>',
-                                '<?= $program['poliklinik_id'] ?>',
-                                '<?= $program['program_turu'] ?>',
-                                '<?= $program['mesai_turu'] ?>',
-                                '<?= $program['baslangic_saati'] ?>',
-                                '<?= $program['bitis_saati'] ?>',
-                                '<?= $program['nerde'] ?>',
-                                '<?= $program['aktif'] ?>'
-                            )" class="text-blue-600 hover:text-blue-900 mr-2">
-                                <i class="fas fa-edit"></i>
-                            </button>
                             <button onclick="deleteProgram(<?= $program['id'] ?>)"
                                 class="text-red-600 hover:text-red-900">
                                 <i class="fas fa-trash"></i>
@@ -130,7 +117,7 @@ $poliklinikler = $db->query("SELECT id, ad FROM poliklinikler ORDER BY ad")->fet
     </div>
 
     <!-- Ekleme Modalı -->
-    <div id="ekleModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+    <div id="ekleModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 ">
         <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6">
             <h2 class="text-xl font-bold mb-4">Yeni Çalışma Programı Ekle</h2>
             <form action="program_ekle.php" method="POST">
@@ -197,15 +184,15 @@ $poliklinikler = $db->query("SELECT id, ad FROM poliklinikler ORDER BY ad")->fet
                     </div>
                     <div class="grid grid-cols-1 gap-4 mb-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">NEREDE GÖREV YAPACAK</label>
-                        <div class="grid grid-cols-3 gap-3">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">MESAİ TÜRÜ</label>
+                        <div class="grid grid-cols-2 gap-3">
                             <div class="flex items-center">
                                 <input type="radio" id="poliklinik" name="mesai_turu" value="Normal Mesai"
                                     class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" checked>
                                 <label for="poliklinik" class="ml-2 block text-sm text-gray-700">Normal Mesai</label>
                             </div>
                             <div class="flex items-center">
-                                <input type="radio" id="ameliyat" name="nesai_turu" value="Nöbet"
+                                <input type="radio" id="ameliyat" name="mesai_turu" value="Nöbet"
                                     class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
                                 <label for="ameliyat" class="ml-2 block text-sm text-gray-700">Nöbet</label>
                             </div>
@@ -250,83 +237,38 @@ $poliklinikler = $db->query("SELECT id, ad FROM poliklinikler ORDER BY ad")->fet
             </form>
         </div>
     </div>
+
     <script>
     // Modal functions
-function openDoktorProgramModal(modalId) {
-    document.getElementById(modalId).classList.remove('hidden');
-    document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
-    
-    // If opening edit modal, you can add specific initialization here
-    if (modalId === 'duzenleModal') {
-        // Initialize edit form if needed
+    function openDoktorProgramModal(modalId) {
+        document.getElementById(modalId).classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
     }
-}
 
-function closeDoktorProgramModal(modalId) {
-    document.getElementById(modalId).classList.add('hidden');
-    document.body.style.overflow = 'auto'; // Re-enable scrolling
-}
-
-// Doktor seçildiğinde poliklinik bilgisini otomatik doldur
-function setupPoliklinikSelection() {
-    const doktorSelect = document.getElementById('doktorSelect');
-    if (doktorSelect) {
-        doktorSelect.onchange = function() {
-            const selectedOption = this.options[this.selectedIndex];
-            const poliklinikId = selectedOption.getAttribute('data-poliklinik');
-            const poliklinikSelect = document.getElementById('poliklinikSelect');
-            
-            if (poliklinikSelect) {
-                poliklinikSelect.value = poliklinikId || '';
-            }
-        };
+    function closeDoktorProgramModal(modalId) {
+        document.getElementById(modalId).classList.add('hidden');
+        document.body.style.overflow = 'auto';
     }
-}
 
-// Operasyon türü değiştiğinde poliklinik alanını ayarla
-function setupOperasyonTuruToggle() {
-    const operasyonRadios = document.querySelectorAll('input[name="operasyon_turu"]');
-    
-    operasyonRadios.forEach(radio => {
-        radio.onclick = function() {
-            const poliklinikContainer = document.getElementById('poliklinikContainer');
-            const poliklinikSelect = document.getElementById('poliklinikSelect');
-            
-            if (this.value === 'Poliklinik') {
-                poliklinikContainer.classList.remove('hidden');
-                poliklinikSelect.required = true;
-                
-                // Otomatik poliklinik seçimi
-                const doktorSelect = document.getElementById('doktorSelect');
-                if (doktorSelect && doktorSelect.value) {
-                    const selectedOption = doktorSelect.options[doktorSelect.selectedIndex];
-                    const poliklinikId = selectedOption.getAttribute('data-poliklinik');
-                    poliklinikSelect.value = poliklinikId || '';
-                }
-            } else {
-                poliklinikContainer.classList.add('hidden');
-                poliklinikSelect.required = false;
-                poliklinikSelect.value = '';
-            }
-        };
-    });
-}
+    // Delete program function
+    function deleteProgram(programId) {
+        if (confirm('Bu programı silmek istediğinize emin misiniz?')) {
+            window.location.href = 'program_sil.php?id=' + programId;
+        }
+    }
 
-// Sayfa yüklendiğinde gerekli ayarlamaları yap
-window.onload = function() {
-    setupPoliklinikSelection();
-    setupOperasyonTuruToggle();
-    
-    // Dışarı tıklayarak kapatma
-    document.querySelectorAll('.modal').forEach(modal => {
-        modal.onclick = function(e) {
-            if (e.target === modal) {
-                closeDoktorProgramModal(modal.id);
+    // Doktor seçildiğinde poliklinik bilgisini otomatik doldur
+    document.getElementById("doktorSelect").addEventListener("change", function () {
+        const selectedOption = this.options[this.selectedIndex];
+        const polId = selectedOption.getAttribute("data-poliklinik");
+        const polSelect = document.getElementById("poliklinikSelect");
+        for (let i = 0; i < polSelect.options.length; i++) {
+            if (polSelect.options[i].value === polId) {
+                polSelect.selectedIndex = i;
+                break;
             }
-        };
+        }
     });
-};
-</script>
+    </script>
 </body>
-
 </html>

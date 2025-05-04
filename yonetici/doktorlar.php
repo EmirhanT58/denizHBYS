@@ -21,9 +21,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["doktor_ekle"])) {
     $sifre = password_hash(substr($tc, -4), PASSWORD_DEFAULT);
     
     try {
-        $stmt = $db->prepare("INSERT INTO doktorlar (tc, ad_soyad, uzmanlik, unvan ,telefon, email, sifre) 
+        $stmt = $db->prepare("INSERT INTO doktorlar (tc, ad_soyad, pol_id, unvan, telefon, email, sifre) 
                              VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt->execute([$tc, $ad_soyad, $uzmanlik, $unvan ,$telefon, $email, $sifre]);
+        $stmt->execute([$tc, $ad_soyad, $uzmanlik, $unvan, $telefon, $email, $sifre]);
         $success = "Doktor başarıyla eklendi!";
     } catch(PDOException $e) {
         $error = "Doktor eklenirken hata oluştu: " . $e->getMessage();
@@ -39,21 +39,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["doktor_guncelle"])) {
     $g_email = $_POST["g_email"];
     $g_unvan = $_POST["g_unvan"];
     $gg_sifre = $_POST["g_sifre"];
-    $g_sifre = password_hash($gg_sifre, PASSWORD_DEFAULT);
     $id = $_POST["g_id"];
     
-    if (!empty($g_sifre)) {
-       
-        $sifreHash = password_hash($g_sifre, PASSWORD_BCRYPT);
-        $sql = "UPDATE doktorlar SET tc=?, ad_soyad=?, uzmanlik=?, unvan=?, telefon=?, email=?, sifre=? WHERE id=?";
+    if (!empty($gg_sifre)) {
+        $g_sifre = password_hash($gg_sifre, PASSWORD_DEFAULT);
+        $sql = "UPDATE doktorlar SET tc=?, ad_soyad=?,  pol_id=?, unvan=?, telefon=?, email=?, sifre=? WHERE id=?";
         $stmt = $db->prepare($sql);
         $stmt->execute([$g_tc, $g_ad_soyad, $g_uzmanlik, $g_unvan, $g_telefon, $g_email, $g_sifre, $id]);
         $success = "Doktor başarıyla güncellendi! (Şifreli)";
     } else {
-      
         $sql = "UPDATE doktorlar SET tc=?, ad_soyad=?, uzmanlik=?, unvan=?, telefon=?, email=? WHERE id=?";
         $stmt = $db->prepare($sql);
-        $stmt->execute([$tc, $ad_soyad, $uzmanlik, $unvan, $telefon, $email, $id]);
+        $stmt->execute([$g_tc, $g_ad_soyad, $g_uzmanlik, $g_unvan, $g_telefon, $g_email, $id]);
         $success = "Doktor başarıyla güncellendi! (Şifresiz)";
     }
 }
@@ -72,7 +69,6 @@ if(isset($_GET["sil"]) && is_numeric($_GET["sil"])) {
 // Doktor durum değiştirme
 if(isset($_GET["durum"]) && is_numeric($_GET["durum"])) {
     try {
-        // Mevcut durumu tersine çevir
         $stmt = $db->prepare("UPDATE doktorlar SET durum = NOT durum WHERE id = ?");
         $stmt->execute([$_GET["durum"]]);
         $success = "Doktor durumu güncellendi!";
@@ -81,10 +77,21 @@ if(isset($_GET["durum"]) && is_numeric($_GET["durum"])) {
     }
 }
 
-
+$poliklinikler = $db->query("SELECT * FROM poliklinikler ORDER BY ad ASC")->fetchAll(PDO::FETCH_ASSOC);
 
 // Doktor listesini getir
-$doktorlar = $db->query("SELECT * FROM doktorlar ORDER BY ad_soyad ASC")->fetchAll(PDO::FETCH_ASSOC);
+$doktorlar = $db->query("SELECT 
+                            doktorlar.id,
+                            doktorlar.tc,
+                            doktorlar.ad_soyad,
+                            doktorlar.unvan,
+                            doktorlar.telefon,
+                            doktorlar.email,
+                            doktorlar.durum,
+                            poliklinikler.ad AS uzmanlik
+                         FROM doktorlar
+                         JOIN poliklinikler ON doktorlar.pol_id = poliklinikler.id
+                         ORDER BY doktorlar.ad_soyad ASC")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <div class="p-2">
@@ -112,18 +119,12 @@ $doktorlar = $db->query("SELECT * FROM doktorlar ORDER BY ad_soyad ASC")->fetchA
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Doktor
-                    </th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Uzmanlık
-                    </th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ünvanı
-                    </th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">İletişim
-                    </th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Durum
-                    </th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">İşlemler
-                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Doktor</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Uzmanlık</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ünvanı</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">İletişim</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Durum</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">İşlemler</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -139,8 +140,7 @@ $doktorlar = $db->query("SELECT * FROM doktorlar ORDER BY ad_soyad ASC")->fetchA
                             <div class="ml-4">
                                 <div class="text-sm font-medium text-gray-900">
                                     <?php echo htmlspecialchars($doktor['ad_soyad']); ?></div>
-                                <div class="text-sm text-gray-500">TCKN: <?php echo htmlspecialchars($doktor['tc']); ?>
-                                </div>
+                                <div class="text-sm text-gray-500">TCKN: <?php echo htmlspecialchars($doktor['tc']); ?></div>
                             </div>
                         </div>
                     </td>
@@ -162,20 +162,20 @@ $doktorlar = $db->query("SELECT * FROM doktorlar ORDER BY ad_soyad ASC")->fetchA
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <a onclick="DoktorBilgisiGetir('<?= $doktor['id'] ?>',
-    '<?= $doktor['tc'] ?>',
-    '<?= htmlspecialchars($doktor['ad_soyad'], ENT_QUOTES) ?>',
-    '<?= htmlspecialchars($doktor['uzmanlik'], ENT_QUOTES) ?>',
-    '<?= htmlspecialchars($doktor['unvan'], ENT_QUOTES) ?>',
-    '<?= $doktor['telefon'] ?>',
-    '<?= $doktor['email'] ?>',
-    '<?= $doktor['sifre'] ?>')" class="text-blue-600 hover:text-blue-900 mr-3">
+                            '<?= $doktor['tc'] ?>',
+                            '<?= htmlspecialchars($doktor['ad_soyad'], ENT_QUOTES) ?>',
+                            '<?= $doktor['uzmanlik'] ?>',
+                            '<?= htmlspecialchars($doktor['unvan'], ENT_QUOTES) ?>',
+                            '<?= $doktor['telefon'] ?>',
+                            '<?= $doktor['email'] ?>')" 
+                            class="text-blue-600 hover:text-blue-900 mr-3 cursor-pointer">
                             <i class="fas fa-edit"></i>
                         </a>
-
                         <a href="dashboard.php?sayfa=doktorlar&sil=<?php echo $doktor['id']; ?>"
                             class="text-red-600 hover:text-red-900"
-                            onclick="return confirm('Bu doktoru silmek istediğinize emin misiniz?')"><i
-                                class="fas fa-trash"></i></a>
+                            onclick="return confirm('Bu doktoru silmek istediğinize emin misiniz?')">
+                            <i class="fas fa-trash"></i>
+                        </a>
                     </td>
                 </tr>
                 <?php endforeach; ?>
@@ -191,8 +191,7 @@ $doktorlar = $db->query("SELECT * FROM doktorlar ORDER BY ad_soyad ASC")->fetchA
             <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
         </div>
 
-        <div
-            class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
             <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Yeni Doktor Ekle</h3>
 
@@ -212,8 +211,12 @@ $doktorlar = $db->query("SELECT * FROM doktorlar ORDER BY ad_soyad ASC")->fetchA
 
                         <div class="sm:col-span-6">
                             <label for="uzmanlik" class="block text-sm font-medium text-gray-700">Uzmanlık</label>
-                            <input type="text" name="uzmanlik" id="uzmanlik" required
+                            <select name="uzmanlik" id="uzmanlik" required
                                 class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2">
+                                <?php foreach($poliklinikler as $poliklinik): ?>
+                                <option value="<?php echo $poliklinik['id']; ?>"><?php echo htmlspecialchars($poliklinik['ad']); ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
 
                         <div class="sm:col-span-6">
@@ -233,7 +236,6 @@ $doktorlar = $db->query("SELECT * FROM doktorlar ORDER BY ad_soyad ASC")->fetchA
                             <input type="email" name="email" id="email"
                                 class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2">
                         </div>
-
                     </div>
 
                     <div class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
@@ -252,20 +254,20 @@ $doktorlar = $db->query("SELECT * FROM doktorlar ORDER BY ad_soyad ASC")->fetchA
     </div>
 </div>
 
+<!-- Doktor Güncelleme Modal -->
 <div id="doktorGuncelleModal" class="fixed inset-0 z-50 hidden overflow-y-auto mt-[130px]">
     <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div class="fixed inset-0 transition-opacity" aria-hidden="true">
             <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
         </div>
 
-        <div
-            class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
             <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Doktor Bilgisi Güncelle</h3>
 
                 <form method="POST" name="doktor_guncelleme">
                     <div class="grid grid-cols-1 gap-y-4 gap-x-6 sm:grid-cols-6">
-                        <input type="text" hidden name="g_id" id="g_id">
+                        <input type="hidden" name="g_id" id="g_id">
                         <div class="sm:col-span-3">
                             <label for="g_tc" class="block text-sm font-medium text-gray-700">TC Kimlik No</label>
                             <input type="text" name="g_tc" id="g_tc" required
@@ -280,8 +282,12 @@ $doktorlar = $db->query("SELECT * FROM doktorlar ORDER BY ad_soyad ASC")->fetchA
 
                         <div class="sm:col-span-6">
                             <label for="g_uzmanlik" class="block text-sm font-medium text-gray-700">Uzmanlık</label>
-                            <input type="text" name="g_uzmanlik" id="g_uzmanlik" required
+                            <select name="g_uzmanlik" id="g_uzmanlik" required
                                 class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2">
+                                <?php foreach($poliklinikler as $poliklinik): ?>
+                                <option value="<?php echo $poliklinik['id']; ?>"><?php echo htmlspecialchars($poliklinik['ad']); ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
 
                         <div class="sm:col-span-6">
@@ -301,9 +307,10 @@ $doktorlar = $db->query("SELECT * FROM doktorlar ORDER BY ad_soyad ASC")->fetchA
                             <input type="email" name="g_email" id="g_email"
                                 class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2">
                         </div>
+                        
                         <div class="sm:col-span-6">
-                            <label for="email" class="block text-sm font-medium text-gray-700" require>Şifre</label>
-                            <input type="password" name="g_sifre" id="g_sifre"
+                            <label for="g_sifre" class="block text-sm font-medium text-gray-700">Şifre</label>
+                            <input type="password" name="g_sifre" id="g_sifre" placeholder="Değiştirmek istemiyorsanız boş bırakın"
                                 class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2">
                         </div>
                     </div>
@@ -313,7 +320,7 @@ $doktorlar = $db->query("SELECT * FROM doktorlar ORDER BY ad_soyad ASC")->fetchA
                             class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:col-start-2 sm:text-sm">
                             Kaydet
                         </button>
-                        <button type="button" onclick="toggleModal()"
+                        <button type="button" onclick="toggleModalGuncelle()"
                             class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:col-start-1 sm:text-sm">
                             İptal
                         </button>
@@ -325,14 +332,15 @@ $doktorlar = $db->query("SELECT * FROM doktorlar ORDER BY ad_soyad ASC")->fetchA
 </div>
 
 <script>
-function toggleModal() {
-    document.getElementById('doktorGuncelleModal').classList.toggle('hidden');
-}
 function toggleModalEkle() {
     document.getElementById('doktorEkleModal').classList.toggle('hidden');
 }
 
-function DoktorBilgisiGetir(id, tc, ad_soyad, uzmanlik, unvan, telefon, email, sifre) {
+function toggleModalGuncelle() {
+    document.getElementById('doktorGuncelleModal').classList.toggle('hidden');
+}
+
+function DoktorBilgisiGetir(id, tc, ad_soyad, uzmanlik, unvan, telefon, email) {
     document.getElementById('g_id').value = id;
     document.getElementById('g_tc').value = tc;
     document.getElementById('g_ad_soyad').value = ad_soyad;
@@ -340,9 +348,7 @@ function DoktorBilgisiGetir(id, tc, ad_soyad, uzmanlik, unvan, telefon, email, s
     document.getElementById('g_unvan').value = unvan;
     document.getElementById('g_telefon').value = telefon;
     document.getElementById('g_email').value = email;
-    document.getElementById('g_sifre').value = sifre;
-
-    // Modali aç
-    document.getElementById('doktorGuncelleModal').classList.remove('hidden');
+    
+    toggleModalGuncelle();
 }
 </script>

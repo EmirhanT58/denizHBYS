@@ -71,15 +71,22 @@ $doctor_ad = $_SESSION['doktor_ad'] ?? '';
                         </a>
                     </li>
                     <li>
+                        <a href="recete.php"
+                            class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-700">
+                            <i class="fas fa-file-medical mr-3 text-gray-500"></i>
+                            Reçeteler
+                        </a>
+                    </li>
+                    <li>
                         <a href="raporlar.php" class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-700">
                             <i class="fas fa-file-medical mr-3 text-gray-500"></i>
                             Raporlar
                         </a>
                     </li>
                     <li>
-                        <a href="icd10sorgula.php" class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-700">
+                        <a href="programim.php" class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-700">
                             <i class="fas fa-search mr-3 text-gray-500"></i>
-                            ICD-10 Sorgu
+                            Çalışma Programım
                         </a>
                     </li>
                     <li>
@@ -89,7 +96,7 @@ $doctor_ad = $_SESSION['doktor_ad'] ?? '';
                         </a>
                     </li>
                     <li class="pt-4 border-t border-gray-200">
-                        <a href="../logout.php" class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-700">
+                        <a href="logout.php" class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-700">
                             <i class="fas fa-sign-out-alt mr-3 text-gray-500"></i>
                             Çıkış Yap
                         </a>

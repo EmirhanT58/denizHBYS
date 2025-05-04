@@ -51,7 +51,7 @@ $doctor_ad = $_SESSION['doktor_ad'] ?? '';
             </div>
             <div class="flex items-center space-x-4">
                 <div class="ml-3 relative">
-                    <div class="flex items-center space-x-2">
+                    <div class="flex items-end space-x-2">
                         <div class="text-right hidden md:block">
                             <p class="text-sm font-medium text-gray-700"><?= htmlspecialchars($doctor_ad) ?></p>
                             <p class="text-xs text-gray-500">Doktor</p>
