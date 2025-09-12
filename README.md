@@ -51,7 +51,6 @@
 ## 📌 Hedeflerim
 - 🌱 React ve Next.js öğrenmek  
 - 📚 Daha fazla **açık kaynak projeye katkı sağlamak**  
-- 🎮 Unity ve Roblox oyun geliştirmede ileri seviyeye çıkmak  
 - ☁️ API ve Web servisleri üzerine daha fazla deneyim kazanmak  
 - 💡 Büyük bir **full-stack proje** geliştirmek  
 
