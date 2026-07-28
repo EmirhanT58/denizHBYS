@@ -254,7 +254,7 @@ utf8mb4_general_ci
 
 ```
 database/
-└── deniz_hbys.sql
+└── denizHBYS.sql
 ```
 
 Dosyasını seçin ve **Import (İçe Aktar)** işlemini gerçekleştirin.
@@ -263,7 +263,7 @@ Dosyasını seçin ve **Import (İçe Aktar)** işlemini gerçekleştirin.
 
 ## 6. Veritabanı Ayarlarını Yapın
 
-`config/baglanti.php`
+`database/db.php`
 
 ```php
 <?php
@@ -302,7 +302,7 @@ Tarayıcınızdan açın.
 http://localhost/denizHBYS
 ```
 
-Varsayılan yönetici hesabınız veya oluşturduğunuz kullanıcı ile giriş yapabilirsiniz.
+Varsayılan yönetici hesabınız veya oluşturduğunuz kullanıcı ile giriş yapabilirsiniz. (Otomatik admin hesabı gelmektedir)
 
 ---
 
@@ -311,31 +311,53 @@ Varsayılan yönetici hesabınız veya oluşturduğunuz kullanıcı ile giriş y
 ```text
 denizHBYS/
 │
-├── assets/
-│   ├── css/
-│   ├── js/
-│   └── images/
+├── RandevuMHRS/            # Randevu alma modülü ve AJAX işlemleri
+│   ├── ajax/               # Veritabanından veri çeken AJAX endpoint'leri
+│   │   ├── get_doktorlar.php
+│   │   ├── get_hastaneler.php
+│   │   ├── get_randevular.php
+│   │   └── ...
+│   ├── dashboard.php
+│   ├── randevu_al.php
+│   └── r_logout.php
 │
-├── config/
-│   └── baglanti.php
+├── css/                    # Stil ve Tailwind konfigürasyonu
+│   └── tailwind.config.js
 │
-├── database/
-│   └── deniz_hbys.sql
+├── database/               # Veritabanı bağlantı ve kurulum dosyaları
+│   ├── db.php              # Ana veritabanı bağlantısı
+│   ├── denizHBYS.sql       # Veritabanı yedeği
+│   ├── ilkkurulum.php
+│   └── tarihsaat.php
 │
-├── includes/
-│   ├── header.php
-│   ├── footer.php
-│   └── sidebar.php
+├── doktor/                 # Doktor paneli ve modülleri
+│   ├── doktor_dashboard.php
+│   ├── doktor_login.php
+│   ├── randevular.php
+│   ├── recete.php
+│   ├── raporlar.php
+│   └── ...
 │
-├── pages/
-│   ├── admin_dashboard.php
-│   ├── doktor_paneli.php
-│   ├── hasta_kayit.php
-│   └── randevu_al.php
+├── hasta/                  # Hasta paneli ve modülleri
+│   ├── hasta_panel.php
+│   ├── hasta_login.php
+│   ├── randevularim.php
+│   ├── recetelerim.php
+│   ├── raporlarim.php
+│   └── ...
 │
-├── index.php
-├── README.md
-└── LICENSE
+├── yonetici/               # Yönetici (Admin) paneli ve ayarlar
+│   ├── dashboard.php
+│   ├── doktorlar.php
+│   ├── hastalar.php
+│   ├── randevular.php
+│   ├── raporlar.php
+│   ├── ayarlar.php
+│   └── ...
+│
+├── README.md               # Proje dökümantasyonu (Bu dosya)
+├── composer.json           # PHP bağımlılık yönetimi
+└── composer.lock
 ```
 
 ---
