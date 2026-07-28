@@ -1,66 +1,77 @@
-# 👋 Merhaba, ben EmirhanT  
+<div align="center">
 
-💻 **Web Programlama** ile ilgileniyorum. Modern web teknolojilerini öğrenmeye, farklı projeler geliştirmeye ve sürekli kendimi geliştirmeye odaklanıyorum.  
-🚀 Açık kaynak katkıları ve kendi projelerimle becerilerimi ileriye taşımak en büyük hedefim.  
+# 🏥 denizHBYS — Hastane Bilgi Yönetim Sistemi
 
----
+[![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://www.php.net/)
+[![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 
-## 🌟 Hakkımda
-- 🔹 Frontend ve Backend geliştirme üzerine çalışıyorum  
-- 🔹 Tailwind CSS, Bootstrap ve modern UI/UX yaklaşımlarını seviyorum  
-- 🔹 SQL veritabanlarıyla (SQLite, MySQL) tecrübeliyim  
-- 🔹 **PHP** ile backend geliştirmede aktif olarak çalışıyorum  
+*Modern, modüler, hızlı ve kullanıcı dostu bir web tabanlı Hastane Bilgi Yönetim Sistemi.*
 
-- 🔹 Yeni teknolojileri araştırmayı, öğrenmeyi ve uygulamayı seviyorum  
-- 🎯 **Hedefim**: Tam stack bir geliştirici olarak hem web hem de oyun geliştirme alanında projeler üretmek  
+</div>
 
 ---
 
-## 🛠️ Kullandığım Teknolojiler  
-
-### 🌐 Web
-![HTML5](https://img.shields.io/badge/-HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/-CSS3-1572B6?style=for-the-badge&logo=css3)
-![JavaScript](https://img.shields.io/badge/-JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![Tailwind](https://img.shields.io/badge/-TailwindCSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![Bootstrap](https://img.shields.io/badge/-Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
-![PHP](https://img.shields.io/badge/-PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
-
-### ⚙️ Backend & Veritabanı
-![NodeJS](https://img.shields.io/badge/-NodeJS-339933?style=for-the-badge&logo=node.js&logoColor=white)
-![SQLite](https://img.shields.io/badge/-SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
-![MySQL](https://img.shields.io/badge/-MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
-![C#](https://img.shields.io/badge/-C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white)
-![PHP](https://img.shields.io/badge/-PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
-
-
-### 🎮 Diğer
-![GitHub](https://img.shields.io/badge/-GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
+## 📖 İçindekiler
+- [Proje Hakkında](#-proje-hakkında)
+- [Temel Modüller ve Özellikler](#-temel-modüller-ve-özellikler)
+- [Kullanılan Teknolojiler](#-kullanılan-teknolojiler)
+- [Sistem Gereksinimleri](#-sistem-gereksinimleri)
+- [Kurulum Adımları](#-kurulum-adımları)
+- [Veritabanı Yapısı](#-veritabanı-yapısı)
+- [Proje Görselleri](#-proje-görselleri)
+- [Geliştirici](#-geliştirici)
+- [Lisans](#-lisans)
 
 ---
 
-## 📊 GitHub İstatistiklerim  
+## 📋 Proje Hakkında
 
-![EmirhanT GitHub Stats](https://github-readme-stats.vercel.app/api?username=EmirhanT58&show_icons=true&theme=radical)  
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=EmirhanT58&layout=compact&theme=radical)  
-![GitHub Streak](https://streak-stats.demolab.com?user=EmirhanT58&theme=radical&hide_border=false)  
-![Profile Views](https://komarev.com/ghpvc/?username=EmirhanT58&label=Profil%20Ziyaretleri&color=blue&style=flat)  
+**denizHBYS**, hastanelerdeki idari ve tıbbi süreçlerin dijital ortamda hatasız, hızlı ve güvenli bir şekilde yönetilmesini sağlayan kapsamlı bir **Hastane Bilgi Yönetim Sistemi (HBYS)** otomasyonudur. 
 
----
-
-## 📌 Hedeflerim
-- 🌱 React ve Next.js öğrenmek  
-- 📚 Daha fazla **açık kaynak projeye katkı sağlamak**  
-- ☁️ API ve Web servisleri üzerine daha fazla deneyim kazanmak  
-- 💡 Büyük bir **full-stack proje** geliştirmek  
+Proje; hasta kabulden muayeneye, poliklinik takibinden reçete işlemlerine kadar temel sağlık hizmeti akışlarını tek bir çatı altında toplar. Sade mimarisi ve modern arayüzü sayesinde kolayca özelleştirilebilir ve geliştirilebilir.
 
 ---
 
-## 📫 Bana Ulaşın
-- 📧 E-posta: [emirhantnrvn@gmail.com](mailto:emirhantnrvn@gmail.com)  
-- 💼 LinkedIn: [linkedin.com/in/emirhant](https://www.linkedin.com/in/emirhan-tanr%C4%B1veren-b6a4b4247/)  
-- 🐙 GitHub: [github.com/EmirhanT58](https://github.com/EmirhanT58)  
+## 🚀 Temel Modüller ve Özellikler
+
+- 👨‍⚕️ **Doktor ve Personel Yönetimi:** Doktor unvanları, branş eşleştirmeleri ve çalışma takvimi yönetimi.
+- 🧑‍ريض **Hasta Kabul ve Kayıt:** Yeni hasta kaydı oluşturma, TC kimlik / dosya numarası ile arama ve geçmiş tetkik takibi.
+- 📅 **Muayene ve Randevu Sistemi:** Poliklinik bazlı randevu planlama, aktif sıra takibi ve muayene durumu yönetimi.
+- 💊 **Reçete ve İlaç Modülü:** Muayene sonrasında reçete oluşturma, ilaç listeleme ve geçmiş reçeteleri görüntüleme.
+- 🔐 **Rol Tabanlı Yetkilendirme (RBAC):** Yönetici, Doktor, Vezne/Sekreter gibi farklı roller için güvenli yetki seviyeleri ve oturum yönetimi.
 
 ---
 
-⭐ **“Kod yazmak sadece bilgisayara değil, geleceğe de yatırım yapmaktır.”**
+## 🛠️ Kullanılan Teknolojiler
+
+Proje geliştirilirken güncel ve performanslı web teknolojileri tercih edilmiştir:
+
+* **Backend:** PHP (Nesne Yönelimli Programlama / Modüler Mimari)
+* **Veritabanı:** MySQL / MariaDB (İlişkisel Veritabanı Yönetimi)
+* **Frontend:** HTML5, CSS3, JavaScript (ES6+)
+* **Stil / Arayüz:** Tailwind CSS / Bootstrap
+* **Sunucu Ortamı:** Apache / Nginx (XAMPP, WAMP veya MAMP uyumlu)
+
+---
+
+## 💻 Sistem Gereksinimleri
+
+Projeyi kendi bilgisayarınızda çalıştırmak için aşağıdaki bileşenlerin kurulu olması gerekir:
+- **PHP:** `v8.0` veya üzeri
+- **MySQL / MariaDB:** `v5.7` veya üzeri
+- **Web Sunucusu:** Apache (XAMPP önerilir)
+- **Tarayıcı:** Güncel herhangi bir web tarayıcısı (Chrome, Edge, Firefox vb.)
+
+---
+
+## ⚙️ Kurulum Adımları
+
+Projeyi yerel ortamınızda (Localhost) çalıştırmak için adım adım şu işlemleri takip edin:
+
+### 1. Depoyu Klonlayın
+Terminal veya komut satırını açarak projeyi bilgisayarınıza indirin:
+```bash
+git clone [https://github.com/EmirhanT58/denizHBYS.git](https://github.com/EmirhanT58/denizHBYS.git)
