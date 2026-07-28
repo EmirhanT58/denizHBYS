@@ -8,69 +8,406 @@
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 
-*Modern, modüler, hızlı ve kullanıcı dostu bir web tabanlı Hastane Bilgi Yönetim Sistemi.*
+### Modern, güvenli, modüler ve kullanıcı dostu web tabanlı Hastane Bilgi Yönetim Sistemi
+
+Hasta kayıtları, randevu yönetimi, doktor işlemleri, reçete oluşturma ve yönetim süreçlerini tek bir platform üzerinden yönetebilmeniz için geliştirilmiştir.
 
 </div>
 
 ---
 
-## 📖 İçindekiler
+# 📖 İçindekiler
+
 - [Proje Hakkında](#-proje-hakkında)
-- [Temel Modüller ve Özellikler](#-temel-modüller-ve-özellikler)
+- [Temel Özellikler](#-temel-özellikler)
+- [Modüller](#-modüller)
 - [Kullanılan Teknolojiler](#-kullanılan-teknolojiler)
 - [Sistem Gereksinimleri](#-sistem-gereksinimleri)
-- [Kurulum Adımları](#-kurulum-adımları)
-- [Proje Görselleri](#-proje-görselleri)
-- [Geliştirici](#-geliştirici)
+- [Kurulum](#-kurulum)
+- [Klasör Yapısı](#-klasör-yapısı)
+- [Güvenlik](#-güvenlik)
+- [Katkıda Bulunma](#-katkıda-bulunma)
 - [Lisans](#-lisans)
 
 ---
 
-## 📋 Proje Hakkında
+# 📋 Proje Hakkında
 
-**denizHBYS**, hastanelerdeki idari ve tıbbi süreçlerin dijital ortamda hatasız, hızlı ve güvenli bir şekilde yönetilmesini sağlayan kapsamlı bir **Hastane Bilgi Yönetim Sistemi (HBYS)** otomasyonudur. 
+**denizHBYS**, hastane ve kliniklerin günlük işleyişini dijital ortama taşıyan kapsamlı bir **Hastane Bilgi Yönetim Sistemi (HBYS)** projesidir.
 
-Proje; hasta kabulden muayeneye, poliklinik takibinden reçete işlemlerine kadar temel sağlık hizmeti akışlarını tek bir çatı altında toplar. Sade mimarisi ve modern arayüzü sayesinde kolayca özelleştirilebilir ve geliştirilebilir.
+Sistem;
 
----
+- Hasta kayıtlarını
+- Doktor işlemlerini
+- Poliklinik yönetimini
+- Randevu planlamasını
+- Reçete oluşturmayı
+- Yönetici işlemlerini
 
-## 🚀 Temel Modüller ve Özellikler
+tek bir merkezden yönetebilmek amacıyla geliştirilmiştir.
 
-- 👨‍⚕️ **Doktor ve Personel Yönetimi:** Doktor unvanları, branş eşleştirmeleri ve çalışma takvimi yönetimi.
-- 🧑‍ريض **Hasta Kabul ve Kayıt:** Yeni hasta kaydı oluşturma, TC kimlik / dosya numarası ile arama ve geçmiş tetkik takibi.
-- 📅 **Muayene ve Randevu Sistemi:** Poliklinik bazlı randevu planlama, aktif sıra takibi ve muayene durumu yönetimi.
-- 💊 **Reçete ve İlaç Modülü:** Muayene sonrasında reçete oluşturma, ilaç listeleme ve geçmiş reçeteleri görüntüleme.
-- 🔐 **Rol Tabanlı Yetkilendirme (RBAC):** Yönetici, Doktor, Vezne/Sekreter gibi farklı roller için güvenli yetki seviyeleri ve oturum yönetimi.
-
----
-
-## 🛠️ Kullanılan Teknolojiler
-
-Proje geliştirilirken güncel ve performanslı web teknolojileri tercih edilmiştir:
-
-* **Backend:** PHP (Nesne Yönelimli Programlama / Modüler Mimari)
-* **Veritabanı:** MySQL / MariaDB (İlişkisel Veritabanı Yönetimi)
-* **Frontend:** HTML5, CSS3, JavaScript (ES6+)
-* **Stil / Arayüz:** Tailwind CSS / Bootstrap
-* **Sunucu Ortamı:** Apache / Nginx (XAMPP, WAMP veya MAMP uyumlu)
+Modern PHP mimarisi kullanılarak hazırlanan sistem; güvenli, ölçeklenebilir ve geliştirmeye açık bir yapıya sahiptir.
 
 ---
 
-## 💻 Sistem Gereksinimleri
+# ✨ Temel Özellikler
 
-Projeyi kendi bilgisayarınızda çalıştırmak için aşağıdaki bileşenlerin kurulu olması gerekir:
-- **PHP:** `v8.0` veya üzeri
-- **MySQL / MariaDB:** `v5.7` veya üzeri
-- **Web Sunucusu:** Apache (XAMPP önerilir)
-- **Tarayıcı:** Güncel herhangi bir web tarayıcısı (Chrome, Edge, Firefox vb.)
+- 👤 Hasta kayıt sistemi
+- 📅 Online randevu yönetimi
+- 👨‍⚕️ Doktor paneli
+- 👩‍💼 Sekreter paneli
+- 👑 Yönetici paneli
+- 💊 Reçete oluşturma
+- 📋 Muayene geçmişi
+- 🏥 Poliklinik yönetimi
+- 📊 Dashboard istatistikleri
+- 🔒 Rol tabanlı yetkilendirme (RBAC)
+- 🛡️ SQL Injection koruması
+- 🛡️ XSS koruması
+- 📱 Responsive tasarım
+- ⚡ PDO tabanlı güvenli veritabanı işlemleri
 
 ---
 
-## ⚙️ Kurulum Adımları
+# 🚀 Modüller
 
-Projeyi yerel ortamınızda (Localhost) çalıştırmak için adım adım şu işlemleri takip edin:
+## 👑 Yönetici (Admin)
 
-### 1. Depoyu Klonlayın
-Terminal veya komut satırını açarak projeyi bilgisayarınıza indirin:
+Yönetici paneli sayesinde sistem tamamen kontrol edilebilir.
+
+### Özellikler
+
+- Personel yönetimi
+- Doktor yönetimi
+- Sekreter yönetimi
+- Kullanıcı yetkilendirme
+- Poliklinik ekleme
+- Poliklinik düzenleme
+- Poliklinik silme
+- Dashboard istatistikleri
+- Aktif hasta sayısı
+- Aktif doktor sayısı
+- Günlük randevu sayısı
+- Sistem yönetimi
+
+---
+
+## 👨‍⚕️ Doktor
+
+Doktor paneli günlük hasta işlemlerini kolaylaştırır.
+
+### Özellikler
+
+- Günlük randevular
+- Hasta geçmişi
+- Muayene bilgileri
+- Teşhis oluşturma
+- Reçete oluşturma
+- Muayene durumunu güncelleme
+
+Durumlar:
+
+- Bekliyor
+- Muayene Edildi
+- İptal
+
+---
+
+## 👩‍💼 Sekreter / Vezne
+
+Hasta kayıt ve randevu süreçlerini yönetir.
+
+### Özellikler
+
+- Yeni hasta kaydı
+- Hasta güncelleme
+- Hasta arama
+- Randevu oluşturma
+- Doktor seçimi
+- Poliklinik seçimi
+- Hasta giriş işlemleri
+
+---
+
+# 🔐 Güvenlik
+
+Sistem güvenliği ön planda tutularak geliştirilmiştir.
+
+## Güvenlik Özellikleri
+
+- PDO Prepared Statement kullanımı
+- SQL Injection koruması
+- XSS filtreleme
+- Session kontrolü
+- Yetki kontrolü
+- Rol bazlı erişim
+- Güvenli oturum yönetimi
+
+---
+
+# 🛠 Kullanılan Teknolojiler
+
+## Backend
+
+- PHP 8+
+- Object Oriented Programming (OOP)
+- MVC Mimarisi
+- PDO
+
+## Frontend
+
+- HTML5
+- CSS3
+- JavaScript (ES6+)
+- AJAX
+
+## Tasarım
+
+- Tailwind CSS *(veya Bootstrap)*
+- Font Awesome
+- Google Fonts
+
+## Veritabanı
+
+- MySQL
+- MariaDB
+
+## Sunucu
+
+- Apache
+- XAMPP
+- WAMP
+- MAMP
+
+---
+
+# 💻 Sistem Gereksinimleri
+
+| Gereksinim | Sürüm |
+|------------|-------|
+| PHP | 8.0+ |
+| MySQL | 5.7+ |
+| MariaDB | Güncel |
+| Apache | Güncel |
+| Tarayıcı | Chrome, Edge, Firefox, Safari |
+
+---
+
+# ⚙️ Kurulum
+
+## 1. Projeyi İndirin
+
 ```bash
-git clone [https://github.com/EmirhanT58/denizHBYS.git](https://github.com/EmirhanT58/denizHBYS.git)
+git clone https://github.com/EmirhanT58/denizHBYS.git
+```
+
+---
+
+## 2. Projeyi Sunucu Dizini İçine Taşıyın
+
+**XAMPP**
+
+```
+C:/xampp/htdocs/denizHBYS/
+```
+
+**WAMP**
+
+```
+C:/wamp/www/denizHBYS/
+```
+
+---
+
+## 3. Apache ve MySQL'i Başlatın
+
+XAMPP veya WAMP üzerinden aşağıdaki servisleri çalıştırın.
+
+- Apache
+- MySQL
+
+---
+
+## 4. Veritabanını Oluşturun
+
+phpMyAdmin'i açın.
+
+```
+http://localhost/phpmyadmin
+```
+
+Yeni bir veritabanı oluşturun.
+
+```
+deniz_hbys
+```
+
+Karakter seti:
+
+```
+utf8mb4_general_ci
+```
+
+---
+
+## 5. SQL Dosyasını İçe Aktarın
+
+```
+database/
+└── deniz_hbys.sql
+```
+
+Dosyasını seçin ve **Import (İçe Aktar)** işlemini gerçekleştirin.
+
+---
+
+## 6. Veritabanı Ayarlarını Yapın
+
+`config/baglanti.php`
+
+```php
+<?php
+
+$host = "localhost";
+$dbname = "deniz_hbys";
+$username = "root";
+$password = "";
+
+try {
+
+    $db = new PDO(
+        "mysql:host=$host;dbname=$dbname;charset=utf8",
+        $username,
+        $password
+    );
+
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+} catch(PDOException $e){
+
+    die("Veritabanı bağlantı hatası : ".$e->getMessage());
+
+}
+
+?>
+```
+
+---
+
+## 7. Projeyi Çalıştırın
+
+Tarayıcınızdan açın.
+
+```
+http://localhost/denizHBYS
+```
+
+Varsayılan yönetici hesabınız veya oluşturduğunuz kullanıcı ile giriş yapabilirsiniz.
+
+---
+
+# 📂 Klasör Yapısı
+
+```text
+denizHBYS/
+│
+├── assets/
+│   ├── css/
+│   ├── js/
+│   └── images/
+│
+├── config/
+│   └── baglanti.php
+│
+├── database/
+│   └── deniz_hbys.sql
+│
+├── includes/
+│   ├── header.php
+│   ├── footer.php
+│   └── sidebar.php
+│
+├── pages/
+│   ├── admin_dashboard.php
+│   ├── doktor_paneli.php
+│   ├── hasta_kayit.php
+│   └── randevu_al.php
+│
+├── index.php
+├── README.md
+└── LICENSE
+```
+
+---
+
+# 🔒 Güvenlik
+
+Sistem aşağıdaki güvenlik standartlarını temel almaktadır.
+
+- PDO Prepared Statements
+- Session Authentication
+- RBAC Yetkilendirme
+- SQL Injection Koruması
+- XSS Koruması
+- Input Validation
+- Output Escaping
+
+---
+
+# 🤝 Katkıda Bulunma
+
+Katkılarınızı memnuniyetle karşılıyorum.
+
+1. Bu projeyi **Fork** edin.
+
+```bash
+git fork
+```
+
+2. Yeni bir branch oluşturun.
+
+```bash
+git checkout -b feature/YeniOzellik
+```
+
+3. Değişikliklerinizi commit edin.
+
+```bash
+git commit -m "Yeni özellik eklendi"
+```
+
+4. Branch'i gönderin.
+
+```bash
+git push origin feature/YeniOzellik
+```
+
+5. Pull Request oluşturun.
+
+---
+
+# 👨‍💻 Geliştirici
+
+**Emirhan T.**
+
+GitHub
+
+> https://github.com/EmirhanT58
+
+---
+
+# 📄 Lisans
+
+Bu proje **MIT License** ile lisanslanmıştır.
+
+Detaylı bilgi için **LICENSE** dosyasına göz atabilirsiniz.
+
+---
+
+<div align="center">
+
+### ⭐ Projeyi beğendiyseniz yıldız vermeyi unutmayın!
+
+Made with ❤️ using PHP & MySQL
+
+</div>
