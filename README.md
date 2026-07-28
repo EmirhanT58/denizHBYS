@@ -38,7 +38,8 @@ Proje; hasta kabulden muayeneye, poliklinik takibinden reçete işlemlerine kada
 ## 🚀 Temel Modüller ve Özellikler
 
 - 👨‍⚕️ **Doktor ve Personel Yönetimi:** Doktor unvanları, branş eşleştirmeleri ve çalışma takvimi yönetimi.
-- 🧑‍ريض **Hasta Kabul ve Kayıt:** Yeni hasta kaydı oluşturma, TC kimlik / dosya numarası ile arama ve geçmiş tetkik takibi.
+- 🧑‍ **Hasta Kabul ve Kayıt:** Yeni hasta kaydı oluşturma, TC kimlik / dosya numarası ile arama ve geçmiş tetkik takibi.
+- 📅 **Muayene ve Randevu Sistemi:** Poliklinik bazlı randevu planlama, aktif sıra takibi ve muayene durumu yönetimi.
 - 📅 **Muayene ve Randevu Sistemi:** Poliklinik bazlı randevu planlama, aktif sıra takibi ve muayene durumu yönetimi.
 - 💊 **Reçete ve İlaç Modülü:** Muayene sonrasında reçete oluşturma, ilaç listeleme ve geçmiş reçeteleri görüntüleme.
 - 🔐 **Rol Tabanlı Yetkilendirme (RBAC):** Yönetici, Doktor, Vezne/Sekreter gibi farklı roller için güvenli yetki seviyeleri ve oturum yönetimi.
