@@ -75,3 +75,36 @@ Projeyi yerel ortamınızda (Localhost) çalıştırmak için adım adım şu i�
 Terminal veya komut satırını açarak projeyi bilgisayarınıza indirin:
 ```bash
 git clone [https://github.com/EmirhanT58/denizHBYS.git](https://github.com/EmirhanT58/denizHBYS.git)
+2. Dosyaları Sunucu Dizinine Taşıyın
+İndirdiğiniz proje klasörünü XAMPP kullanıyorsanız C:/xampp/htdocs/ dizininin içine kopyalayın. Klasör adının denizHBYS olduğundan emin olun.
+
+3. Veritabanını Oluşturun ve İçe Aktarın
+Tarayıcınızdan phpMyAdmin paneline gidin (http://localhost/phpmyadmin).
+
+Yeni bir veritabanı oluşturun (Örn: deniz_hbys).
+
+Proje klasörü içerisinde bulunan .sql uzantılı veritabanı dosyasını seçin ve İçe Aktar (Import) butonuna basarak tabloları yükleyin.
+
+4. Veritabanı Bağlantı Ayarlarını Yapın
+Proje ana dizinindeki veritabanı bağlantı dosyasını (genellikle db.php, baglanti.php veya config.php adındadır) bir metin düzenleyiciyle açın ve kendi yerel bilgilerinize göre güncelleyin:
+
+PHP
+<?php
+$host = "localhost";
+$dbname = "deniz_hbys";
+$username = "root";
+$password = ""; // Kendi MySQL şifreniz (varsayılan XAMPP'te boştur)
+
+try {
+    $db = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
+    // Hata modunu aktifleştir
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo "Bağlantı Hatası: " . $e.getMessage();
+}
+?>
+5. Projeyi Çalıştırın
+Tarayıcınızı açın ve adres çubuğuna şu bağlantıyı yazarak sisteme giriş yapın:
+
+Plaintext
+http://localhost/denizHBYS
